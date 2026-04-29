@@ -10,7 +10,8 @@
 
 2. Configuração do Backend (Laravel)
 
-´´´bash
+Abre o terminal, navega até à pasta do backend e executa:
+```bash
 
 # Entrar na pasta do backend
 cd meu-backend-laravel
