@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+/* VARIÁVEIS GLOBAIS DE COR */
+/* TEMA ESCURO */
+:root {
+  --bg-dark: #0f0a1a;
+  --bg-card: #1a1528;
+  --primary-purple: #9d4edd;
+  /* ... resto das tuas variáveis esculturais ... */
+  --text-main: #ffffff;
+  --text-muted: #a09eb0;
+}
+
+/* TEMA CLARO  */
+/* Quando o body tiver a classe "light-theme", estas variáveis substituem as de cima! */
+body.light-theme {
+  --bg-dark: #f8f9fa; /* Um branco acinzentado suave */
+  --bg-card: #ffffff; /* Cartões totalmente brancos */
+  --primary-purple: #7b2cbf; /* Um roxo um pouco mais escuro para ler bem no branco */
+  --text-main: #1a1528; /* Texto escuro */
+  --text-muted: #6c757d; /* Texto secundário cinza */
+}
+
+/* RESET GLOBAL (Mata o fundo branco do browser!) */
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark); /* Fundo escuro em tudo */
+  color: var(--text-main); /* Texto branco por defeito */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
