@@ -1,0 +1,41 @@
+<div class="auth-container">
+    <div class="auth-card">
+        
+        <div class="auth-header">
+            <span class="logo-icon">✨</span>
+            <h2>Create an Account</h2>
+            <p>Join FinanceFlow and take control of your money</p>
+        </div>
+
+        <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" formControlName="name" placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" placeholder="you@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" formControlName="password" placeholder="••••••••">
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn-primary w-100" style="margin-top: 10px;">Sign Up</button>
+        </form>
+
+        <div class="auth-footer">
+            <!-- Este link atira o utilizador de volta para o Login -->
+            <p>Already have an account? <a routerLink="/login">Sign in</a></p>
+        </div>
+
+    </div>
+</div>
