@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService, LoginRequest } from '../../services/auth';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class Login {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   // Método para lidar com o envio do formulário
@@ -35,22 +37,20 @@ export class Login {
       //Chamar o serviço de autenticação para tentar fazer login
       this.authService.login(backEndData).subscribe({
         next: (reply) => {
-          console.log('Login bem-sucedido:', reply);
+          this.toastr.success('Login bem-sucedido!');
           // O token é automaticamente guardado no AuthService via tap()
           // Redirecionar para a página principal ou dashboard após o login
           this.router.navigate(['/dashboard']);
         },
         error: (erro) => {
-          console.error('Erro no login:', erro);
-          // Aqui mostramos uma mensagem de erro ao utilizador
-          alert('Falha no login. Verifique suas credenciais e tente novamente.');
+          this.toastr.error('Falha no login. Verifica as tuas credenciais.');
         }
       });
 
 
     } else {
       // Se falhar (ex: password muito curta), podemos mostrar um erro
-      console.log('Formulário inválido. Verifica os campos.');
+      this.toastr.error('Formulário inválido. Verifica os campos.');
     }
   }
 }

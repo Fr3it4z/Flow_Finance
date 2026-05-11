@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService, RegisterRequest} from '../../services/auth';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule],
@@ -20,19 +22,20 @@ export class Register {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   onSubmit() {
     
     if (this.registerForm.invalid) {
-      console.log('Formulário inválido. Verifica os campos.');
+      this.toastr.error('Formulário inválido. Verifica os campos.');
       return;
     };
 
     if(this.registerForm.value.password !== this.registerForm.value.confirmPassword)
       {
-        console.log('As passwords não coincidem.');
+        this.toastr.error('As passwords não coincidem.');
         return;
       }
 
@@ -44,13 +47,13 @@ export class Register {
 
     this.authService.register(backEndData).subscribe({
       next: (reply) => {
-        console.log('Registo bem-sucedido:', reply);
+        this.toastr.success('Registo bem-sucedido! Bem-vindo!');
         // O token é automaticamente guardado no AuthService via tap()
-        // Redirecionar para a página de login após o registo
-        this.router.navigate(['/login']);
+        // Redirecionar para a dashboard após o registo
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        console.error('Erro ao registar:', err);
+        this.toastr.error('Erro ao registar. Tenta novamente.');
       }
   });}
 }

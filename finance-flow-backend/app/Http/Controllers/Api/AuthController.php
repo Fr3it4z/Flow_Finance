@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         //Validar os campos antes de aceita-los
-        $scancamps = $request->validate([
+        $validated = $request->validate([
             'name'=>'required|string|max:255',
             'email'=>'required|string|email|unique:users',
             'password'=>'required|string|min:6'
@@ -21,9 +21,9 @@ class AuthController extends Controller
 
         //Criar o Utilizador na bd e faz o hash
         $user = User::create([
-            'name'=>$scancamps['name'],
-            'email'=>$scancamps['email'],
-            'password'=>Hash::make($scancamps['password'])
+            'name'=>$validated['name'],
+            'email'=>$validated['email'],
+            'password'=>Hash::make($validated['password'])
         ]);
 
         //Criar o token para o user
@@ -36,15 +36,15 @@ class AuthController extends Controller
     }
     public function login(Request $request) 
     {
-        $scancamps = $request->validate([
+        $validated = $request->validate([
             'email'=>'required|string|email',
             'password'=>'required|string|min:6'
         ]);
 
-        $user = User::where('email',$scancamps['email'])->first();
+        $user = User::where('email',$validated['email'])->first();
 
         //Validação de campos da password
-        if(!$user || !Hash::check($scancamps['password'],$user -> password))
+        if(!$user || !Hash::check($validated['password'],$user -> password))
         {
             return response()->json(['message' => 'Credenciais incorretas'], 401);
         }

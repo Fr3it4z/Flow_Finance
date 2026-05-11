@@ -10,12 +10,14 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -33,8 +35,6 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         // Se receber erro 401 (não autorizado), o token expirou
         if (error.status === 401) {
-          console.warn('Token expirou ou é inválido');
-          
           // Limpar token expirado
           localStorage.removeItem('finance_token');
           this.authService.updateAuthStatus(false);
@@ -42,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
           // Redirecionar para login
           this.router.navigate(['/login']);
           
-          alert('Sessão expirada. Por favor, faça login novamente.');
+          this.toastr.error('Sessão expirada. Por favor, faça login novamente.');
         }
 
         return throwError(() => error);
