@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule], // 👈 Injetamos as ferramentas necessárias
+  imports: [ReactiveFormsModule, RouterLink], // 👈 Injetamos as ferramentas necessárias
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -40,7 +40,7 @@ export class Login {
           this.toastr.success('Login bem-sucedido!');
           // O token é automaticamente guardado no AuthService via tap()
           // Redirecionar para a página principal ou dashboard após o login
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         },
         error: (erro) => {
           this.toastr.error('Falha no login. Verifica as tuas credenciais.');

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService, RegisterRequest} from '../../services/auth';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink], // 👈 Injetamos as ferramentas necessárias
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -49,8 +49,8 @@ export class Register {
       next: (reply) => {
         this.toastr.success('Registo bem-sucedido! Bem-vindo!');
         // O token é automaticamente guardado no AuthService via tap()
-        // Redirecionar para a dashboard após o registo
-        this.router.navigate(['/dashboard']);
+        // Redirecionar para a home após o registo
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         this.toastr.error('Erro ao registar. Tenta novamente.');
