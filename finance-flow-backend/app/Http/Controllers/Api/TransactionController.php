@@ -56,4 +56,9 @@ class TransactionController extends Controller
 
         return response()->json(null, 204);
     }
+
+    public function getSummary(Request $request)
+    {
+        
+    }
 }
