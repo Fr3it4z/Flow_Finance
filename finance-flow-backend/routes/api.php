@@ -17,6 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class,'logout']);
 
     //Outras rotas ficaram aqui
+    Route::get('transactions/summary',[TransactionController::class,'getSummary']);
 
     //Rotas de categorias
     Route::apiResource('categories', CategoryController::class);
@@ -24,7 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('transactions', TransactionController::class);
     //Rotas dos objetivos de poupança
     Route::apiResource('saving-goals', SavingGoalController::class);
-
+    
 });
 
 

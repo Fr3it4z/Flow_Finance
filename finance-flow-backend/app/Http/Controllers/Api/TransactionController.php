@@ -59,6 +59,22 @@ class TransactionController extends Controller
 
     public function getSummary(Request $request)
     {
+        $initdate = $request->query('initDate') ?? now()->startOfMonth();
+        $enddate = $request->query('endDate') ?? now();
         
+        $query = $request->user()->transactions()
+                                ->whereBetween('transaction_date',[$initdate,$enddate]);
+
+        $income = (clone $query)->where('type','income')->sum('amount');
+
+        $expense = (clone $query)->where('type','expense')->sum('amount');
+
+        $net_saving = $income - $expense;
+
+        return response()->json([
+            'income' => $income,
+            'expense' => $expense,
+            'net_saving'=>$net_saving
+        ]);
     }
 }
