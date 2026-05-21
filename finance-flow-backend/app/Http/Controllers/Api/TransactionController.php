@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTransactionRequest; 
 use App\Http\Resources\TransactionResource;
+use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Transaction;
 
 class TransactionController extends Controller
@@ -27,7 +28,7 @@ class TransactionController extends Controller
         $transaction = $request->user()->transactions()->create($request->validated());
         
 
-        return response()->json(new TransactionResource($transaction, 201));
+        return response()->json(new TransactionResource($transaction), 201);
     }
 
     public function show(Request $request, $id)
