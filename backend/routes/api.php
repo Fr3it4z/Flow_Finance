@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\SavingGoalController;
+use App\Http\Controllers\Api\DashboardController;
 
 //Rotas Publicas
 Route::post('/register', [AuthController::class,'register']);
@@ -24,6 +25,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('transactions', TransactionController::class);
     //Rotas dos objetivos de poupança
     Route::apiResource('saving-goals', SavingGoalController::class);
+
+    //Rota dos dados agregados do dashboard (Home)
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
 });
 
