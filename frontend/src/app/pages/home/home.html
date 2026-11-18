@@ -1,119 +1,110 @@
-<div class="dark-layout">
-    <aside class="sidebar">
-        <div class="brand">
-            <span class="logo-icon">💰</span> Financelow
-        </div>
-        <nav class="nav-links">
-            <a href="/home" class="active"><i class="fa fa-home"></i> Home</a>
-            <a href="/dashboard"><i class="fa fa-table"></i> Dashboard</a>
-            <a href="#"><i class="fa fa-exchange-alt"></i> Transactions</a>
-            <a href="#"><i class="fa fa-bullseye"></i> Goals</a>
-            <a href="#"><i class="fa fa-cog"></i> Settings</a>
-        </nav>
-    </aside>
+<header class="page-header">
+  <h1>Início</h1>
+  <p>O teu perfil financeiro e visão geral.</p>
+</header>
 
-    <main class="main-content">
-        <header class="page-header">
-            <h1>Home</h1>
-            <p>Your personal finance profile and overview.</p>
-        </header>
+@if (data() === undefined) {
+  <p class="state-message">A carregar...</p>
+} @else if (data() === null) {
+  <p class="state-message">Não foi possível carregar o resumo.</p>
+} @else {
+  @let summary = data()!.summary;
 
-        <div class="grid-layout">
+  <!-- Resumo do mês -->
+  <section class="card">
+    <h2 class="card-title">Resumo financeiro</h2>
+    <div class="summary-grid">
+      <div class="summary-box income">
+        <span class="box-label">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+            <polyline points="16 7 22 7 22 13" />
+          </svg>
+          Receitas
+        </span>
+        <span class="box-value">{{ summary.total_income | currency: 'EUR' }}</span>
+        <span class="box-sub">Este mês</span>
+      </div>
 
-            <div class="left-col">
-                <div class="card profile-card">
-                    <div class="card-header">
-                        <h3>Profile</h3>
-                        <span class="edit-icon">✏️</span>
-                    </div>
-                    <div class="profile-info">
-                        <div class="avatar"></div>
-                        <h2>John Anderson</h2>
-                        <p class="role">Premium Member</p>
-                        <span class="status-badge">🟢 Active</span>
-                    </div>
-                    <div class="contact-info">
-                        <p>✉️ john.anderson&#64;email.com</p>
-                        <p>📞 +1 (555) 123-4567</p>
-                        <p>📍 San Francisco, CA</p>
-                        <p>📅 Member since Jan 2024</p>
-                    </div>
-                </div>
+      <div class="summary-box expense">
+        <span class="box-label">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
+            <polyline points="16 17 22 17 22 11" />
+          </svg>
+          Despesas
+        </span>
+        <span class="box-value">{{ summary.total_expenses | currency: 'EUR' }}</span>
+        <span class="box-sub">Este mês</span>
+      </div>
 
-                <div class="card">
-                    <h3 class="card-title">Quick Stats</h3>
-                    <div class="stat-row">
-                        <div class="stat-icon blue">📁</div>
-                        <span>Total Accounts</span>
-                        <span class="stat-num">3</span>
-                    </div>
-                    <div class="stat-row">
-                        <div class="stat-icon green">↗️</div>
-                        <span>Transactions</span>
-                        <span class="stat-num">127</span>
-                    </div>
-                </div>
+      <div class="summary-box savings">
+        <span class="box-label">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"
+            />
+            <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
+          </svg>
+          Poupança líquida
+        </span>
+        <span class="box-value">{{ summary.net_savings | currency: 'EUR' }}</span>
+        <span class="box-sub">Este mês</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="bottom-grid">
+    <!-- Despesas por categoria (top 5) -->
+    <section class="card">
+      <h2 class="card-title">Despesas por categoria</h2>
+      <div class="card-body">
+        @for (item of topCategories(); track item.category) {
+          <div class="category-row">
+            <div class="category-header">
+              <span>{{ item.category }}</span>
+              <span class="category-values">
+                <span class="muted">{{ item.amount | currency: 'EUR' }}</span>
+                <span>{{ item.percentage }}%</span>
+              </span>
             </div>
-
-            <div class="right-col">
-
-                <div class="card">
-                    <h3 class="card-title">Financial Summary</h3>
-                    <div class="summary-grid">
-                        <div class="summary-box">
-                            <p class="box-label text-green">↗ Total Income</p>
-                            <h2 class="text-green">$14,250</h2>
-                            <p class="box-sub">This month</p>
-                        </div>
-                        <div class="summary-box">
-                            <p class="box-label text-red">↘ Total Expenses</p>
-                            <h2 class="text-red">$6,480</h2>
-                            <p class="box-sub">This month</p>
-                        </div>
-                        <div class="summary-box">
-                            <p class="box-label text-purple">🗂 Net Savings</p>
-                            <h2 class="text-purple">$7,770</h2>
-                            <p class="box-sub">This month</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title">Spending by Category</h3>
-
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span>Food & Dining</span>
-                            <span>$1250 <b>28%</b></span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill fill-orange" style="width: 28%"></div>
-                        </div>
-                    </div>
-
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span>Transportation</span>
-                            <span>$980 <b>22%</b></span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill fill-blue" style="width: 22%"></div>
-                        </div>
-                    </div>
-
-                    <div class="progress-item">
-                        <div class="progress-header">
-                            <span>Shopping</span>
-                            <span>$850 <b>19%</b></span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill fill-pink" style="width: 19%"></div>
-                        </div>
-                    </div>
-
-                </div>
+            <div class="progress-track">
+              <div
+                class="progress-fill"
+                [style.width.%]="item.percentage"
+                [style.background-color]="item.color"
+              ></div>
             </div>
+          </div>
+        } @empty {
+          <p class="state-message">Ainda não tens despesas este mês.</p>
+        }
+      </div>
+    </section>
 
-        </div>
-    </main>
-</div>
+    <!-- Últimas 5 transações -->
+    <section class="card">
+      <h2 class="card-title">Atividade recente</h2>
+      <ul class="card-body activity-list">
+        @for (transaction of recentActivity(); track transaction.id) {
+          <li class="activity-item">
+            <span class="activity-icon">{{ transaction.category?.icon }}</span>
+            <div class="activity-text">
+              <span>{{ transaction.description || transaction.category?.name }}</span>
+              <span class="muted small">{{ transaction.category?.name }}</span>
+            </div>
+            <div class="activity-side">
+              <span [class]="transaction.type">
+                {{ transaction.type === 'expense' ? '-' : '+'
+                }}{{ transaction.amount | currency: 'EUR' }}
+              </span>
+              <span class="muted small">{{ transaction.dateLabel }}</span>
+            </div>
+          </li>
+        } @empty {
+          <li class="state-message">Ainda não registaste transações.</li>
+        }
+      </ul>
+    </section>
+  </div>
+}

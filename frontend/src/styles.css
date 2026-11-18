@@ -11,6 +11,11 @@
   /* ... resto das tuas variáveis esculturais ... */
   --text-main: #ffffff;
   --text-muted: #a09eb0;
+  --primary-purple-light: #a855f7;
+  --success-green: #22c55e;
+  --danger-red: #ef4444;
+  --border-color: rgba(255, 255, 255, 0.06);
+  --track-color: rgba(168, 85, 247, 0.12);
 }
 
 /* TEMA CLARO  */
@@ -21,10 +26,16 @@ body.light-theme {
   --primary-purple: #7b2cbf; /* Um roxo um pouco mais escuro para ler bem no branco */
   --text-main: #1a1528; /* Texto escuro */
   --text-muted: #6c757d; /* Texto secundário cinza */
+  --primary-purple-light: #9333ea;
+  --success-green: #16a34a;
+  --danger-red: #dc2626;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --track-color: rgba(147, 51, 234, 0.12);
 }
 
 /* RESET GLOBAL (Mata o fundo branco do browser!) */
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   background-color: var(--bg-dark); /* Fundo escuro em tudo */

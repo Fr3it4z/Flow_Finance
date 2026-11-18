@@ -1,0 +1,147 @@
+.app-shell {
+  display: flex;
+  height: 100vh;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+}
+
+/* Ícones (estilo Lucide) */
+svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 12px;
+  background-color: var(--bg-card);
+  border-right: 1px solid var(--border-color);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px;
+  margin-bottom: 32px;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.brand-logo {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--track-color);
+  font-size: 1.3rem;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-links a,
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nav-links a:hover:not(.active):not(.disabled) {
+  background-color: var(--track-color);
+}
+
+.nav-links a.active {
+  background: linear-gradient(90deg, var(--primary-purple-light), #c084fc);
+  color: #fff;
+}
+
+.nav-links a.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.theme-toggle {
+  margin-top: auto;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  border-radius: 0;
+  padding-top: 20px;
+  background: none;
+  font: inherit;
+  opacity: 0.7;
+  cursor: default;
+}
+
+/* ================= CONTEÚDO ================= */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 32px;
+  overflow-y: auto;
+}
+
+/* Botão flutuante "+" */
+.fab {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--primary-purple-light);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+}
+
+.fab svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Ecrãs pequenos: sidebar só com ícones */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 72px;
+  }
+
+  .label {
+    display: none;
+  }
+
+  .brand,
+  .nav-links a,
+  .theme-toggle {
+    justify-content: center;
+  }
+
+  .main-content {
+    padding: 20px 16px;
+  }
+}

@@ -84,7 +84,8 @@ e voltar a correr `php artisan migrate`.
 Flow_Finance/
 ├── backend/      # API Laravel
 ├── frontend/     # SPA Angular
-└── dbtheory/     # Esquema de referência da base de dados (create.sql)
+├── dbtheory/     # Esquema de referência da base de dados (create.sql)
+└── CLAUDE.md     # Convenções de desenvolvimento do projeto
 ```
 
 ## 🗺️ Etapas de desenvolvimento (MVP)
@@ -96,9 +97,9 @@ Flow_Finance/
 - [x] CRUD de Objetivos de Poupança (API)
 - [x] Frontend: Welcome page
 - [x] Frontend: Sign In (Login + Registo)
-- [ ] **Backend: dados para o painel principal (dashboard)** — *em desenvolvimento*
-- [ ] Frontend: painel principal (dashboard) consumindo a API
-- [ ] Frontend: Transações
+- [x] Backend: dados para o painel principal (`GET /api/dashboard`)
+- [x] Frontend: layout privado com sidebar + painel principal (Home/Dashboard) consumindo a API
+- [ ] **Frontend: Transações** — *próxima etapa*
 - [ ] Frontend: Objetivos de poupança
 - [ ] Dark mode
 

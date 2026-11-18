@@ -1,0 +1,86 @@
+<header class="page-header">
+  <h1>Dashboard</h1>
+  <p>Resumo das tuas finanças este mês.</p>
+</header>
+
+@if (data() === undefined) {
+  <p class="state-message">A carregar...</p>
+} @else if (data() === null) {
+  <p class="state-message">Não foi possível carregar os dados do painel.</p>
+} @else {
+  @let dashboard = data()!;
+
+  <!-- Resumo do mês -->
+  <section class="summary-grid">
+    <div class="card summary-card">
+      <span class="summary-label">Receitas</span>
+      <span class="summary-value income">
+        {{ dashboard.summary.total_income | currency: 'EUR' }}
+      </span>
+    </div>
+    <div class="card summary-card">
+      <span class="summary-label">Despesas</span>
+      <span class="summary-value expense">
+        {{ dashboard.summary.total_expenses | currency: 'EUR' }}
+      </span>
+    </div>
+    <div class="card summary-card">
+      <span class="summary-label">Poupança líquida</span>
+      <span
+        class="summary-value"
+        [class.income]="dashboard.summary.net_savings >= 0"
+        [class.expense]="dashboard.summary.net_savings < 0"
+      >
+        {{ dashboard.summary.net_savings | currency: 'EUR' }}
+      </span>
+    </div>
+  </section>
+
+  <div class="content-grid">
+    <!-- Despesas por categoria -->
+    <section class="card">
+      <h3 class="card-title">Despesas por categoria</h3>
+      @for (item of dashboard.spending_by_category; track item.category) {
+        <div class="category-row">
+          <div class="category-info">
+            <span>{{ item.icon }} {{ item.category }}</span>
+            <span class="category-amount">
+              {{ item.amount | currency: 'EUR' }} · {{ item.percentage }}%
+            </span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-bar" [style.width.%]="item.percentage"></div>
+          </div>
+        </div>
+      } @empty {
+        <p class="empty-message">Ainda não tens despesas este mês.</p>
+      }
+    </section>
+
+    <!-- Atividade recente -->
+    <section class="card">
+      <h3 class="card-title">Atividade recente</h3>
+      <ul class="activity-list">
+        @for (transaction of dashboard.recent_activity; track transaction.id) {
+          <li class="activity-item">
+            <span class="activity-icon">{{ transaction.category?.icon }}</span>
+            <div class="activity-details">
+              <span class="activity-description">
+                {{ transaction.description || transaction.category?.name }}
+              </span>
+              <span class="activity-meta">
+                {{ transaction.category?.name }} · {{ transaction.date | date: 'dd/MM/yyyy' }}
+              </span>
+            </div>
+            <span class="activity-amount" [class]="transaction.type">
+              {{ transaction.type === 'expense' ? '-' : '+'
+              }}{{ transaction.amount | currency: 'EUR' }}
+            </span>
+          </li>
+        } @empty {
+          <li class="empty-message">Ainda não registaste transações.</li>
+        }
+      </ul>
+    </section>
+  </div>
+}
